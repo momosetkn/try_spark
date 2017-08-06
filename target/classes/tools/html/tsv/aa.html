@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Hello Spark!!</title>
+</head>
+<body>
+<div>
+	<div>tsv here</div>
+	<textarea id="input" rows="20" cols="100">
+	</textarea>
+</div>
+<button id="insert_button" type="button" onclick="insert()">insert</button>
+<div>
+	<div>output</div>
+	<textarea id="output" rows="20" cols="100">
+	</textarea>
+</div>
+
+<script>
+document.getElementById("insert_button").addEventListener("click", function () {
+	var input = document.querySelector("#input");
+
+	fetch("insert/"+input.value, {
+		method: "post"
+		}).then(function (response) {
+			if (response.status === 200) {
+				console.log(response.statusText); // => "OK"
+				return response.text();
+		  	} else {
+			    console.log(response.statusText); // => Error Message
+			}
+		}).then(function (text) {
+			document.querySelector("#output").value = text;
+		}).catch(function (response) {
+			console.log(response); // => "TypeError: ~"
+		});
+	}
+
+});
+</script>
+</body>
+</html>
